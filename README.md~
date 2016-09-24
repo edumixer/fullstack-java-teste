@@ -64,21 +64,6 @@ Por questões de seguraça as conexões do banco de dados ficam no servidor e n�
 	Devido ao fato do Wildfly ser completo a lib do Hibernate que foi usado está dentro dele e não no projeto do módulo do back-end.
 
 
-# Configuração do projeto no eclipse
-	
-	Clique em File -> Open Projects from Filesystem
-	Adicione os dois projetos no workspace.
-	Clique com o botão direito no módulo Web.
-	Clique em Deployment Assembly e adicione o projeto do back.
-	Feche a janela.
-	Neste momento execute um clean e após um Build.
-	Lembrando que o wildfly 10 deve estar adicionar no workspace em Preferences -> Runtime Environments.
-	
-	
-	
-
-
-
 
 
 
