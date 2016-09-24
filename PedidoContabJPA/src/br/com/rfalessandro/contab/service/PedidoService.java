@@ -1,5 +1,6 @@
 package br.com.rfalessandro.contab.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.enterprise.context.Dependent;
@@ -11,7 +12,7 @@ import br.com.rfalessandro.contab.dao.PedidoDAO;
 import br.com.rfalessandro.contab.model.PedidoModel;
 
 
-@Transactional
+
 @Dependent
 public class  PedidoService {
 
@@ -21,14 +22,18 @@ public class  PedidoService {
 	
 	
 	
-	public List<PedidoModel> buscarPedidos()
+	public List<PedidoModel> buscarPedidos(BigDecimal codigo)
 	{		
-		return pedidoDAO.getAll();
+		return pedidoDAO.getAllByCodigo(codigo);
 	}
 	
 	@Transactional(value=TxType.REQUIRED)
-	public  PedidoModel cadastarPedido(PedidoModel pedido) {
-		return pedidoDAO.salvar(pedido);
+	public  void cadastarPedido(PedidoModel pedido) throws Exception {
+		pedidoDAO.salvar(pedido);
+	}
+
+	public PedidoModel buscarPedido(Long cdPedido) {
+		return pedidoDAO.getByCdPedido(cdPedido);
 	}
 	
 }

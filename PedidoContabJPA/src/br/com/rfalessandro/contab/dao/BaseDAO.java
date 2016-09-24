@@ -1,12 +1,11 @@
 package br.com.rfalessandro.contab.dao;
 
-import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.rfalessandro.contab.model.BaseModel;
 
-@Dependent
+
 public class BaseDAO<T extends BaseModel> {
 
 	@PersistenceContext(unitName = "PedidoContabPU")
@@ -15,8 +14,8 @@ public class BaseDAO<T extends BaseModel> {
 	// Classe utilizada para adicionar todos métodos comuns a todos os DAOS
 
 	
-	public T salvar(T model) {
-		return entityManager.merge(model);
+	public void salvar(T model) {
+		entityManager.persist(model);
 	}
 
 	
@@ -26,5 +25,8 @@ public class BaseDAO<T extends BaseModel> {
 	
 	
 	
-	
+
+	public T editar(T model) {
+		return entityManager.merge(model);
+	}
 }

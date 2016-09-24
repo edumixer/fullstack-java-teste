@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Contabilizei - Pedido - Alessandro R. Franco!</title>
+	<link rel="stylesheet" href="css/angular-material.min.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body ng-app="pedidoContabApp" ng-controller="indexCtrl">
+
+	<!-- ANGULAR E MATERIAL -->
+	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/angular-animate.min.js"></script>
+	<script src="js/lib/angular-aria.min.js"></script>
+	<script src="js/lib/angular-messages.min.js"></script>
+	<script src="js/lib/angular-route.min.js"></script>
+	<script src="js/lib/angular-material.min.js"></script>
+	
+	<!-- APP -->
+	<script src="js/app.js"></script>	
+	<script src="js/controller/index.js"></script>
+	
+	<!-- DIRECTIVES -->
+	<script src="js/directive/mask.js"></script>
+	
+	<!-- SERVICES -->
+	<script src="js/service/pedido-service.js"></script>
+	<script src="js/service/produto-service.js"></script>
+	<!-- CONTROLLER -->
+	<script src="js/controller/pedido-find.js"></script>
+	<script src="js/controller/pedido-create.js"></script>
+	
+	
+
+	<md-toolbar md-scroll-shrink ng-if="true" >
+		<div class="md-toolbar-tools" >
+			<md-button class="md-icon-button" aria-label="Settings" ng-click="toggleMenu()"> <md-icon md-svg-icon="imgs/menu.svg"></md-icon> </md-button>
+			<h3>
+				<span>Contabilizei - Pedido</span>
+			</h3>
+		</div>
+	</md-toolbar>
+
+
+	<md-content flex >
+		<div layout="column"  ng-cloak style="min-height: 400px;">
+	
+			<section layout="row" flex>
+	
+				<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" style="height: 170px;">
+					
+					<md-toolbar class="md-theme-indigo">
+						<h1 class="md-toolbar-tools">Menu</h1>
+					</md-toolbar>
+					
+					<md-content layout="column" layout-margin>
+					
+						<md-button ng-click="goTo('pedido-create/0')" class="md-primary "> Registrar Pedido  </md-button>
+						
+						<md-button ng-click="goTo('pedido-find')" class="md-primary "> Procurar Pedido </md-button>
+						
+						 
+					</md-content> 
+				</md-sidenav>
+				<md-content flex layout-padding   ng-view> 
+					 
+				</md-content>
+			</section>
+		</div>	
+	</md-content>
+</body>
+
+
+</html>

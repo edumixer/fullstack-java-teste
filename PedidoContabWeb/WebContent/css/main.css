@@ -1,0 +1,21 @@
+md-toast.md-success-toast-theme .md-toast-content {
+	background-color: rgba(0,0,0, 0.8) !important;
+}
+
+md-toast.md-error-toast-theme .md-toast-content { 
+	background-color: rgba(200,0,0,0.8); 
+}
+
+md-toast {
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+    left: 0;
+    
+    right: 0;
+
+    top: 10px;
+
+}

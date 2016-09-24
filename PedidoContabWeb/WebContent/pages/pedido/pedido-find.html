@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<div class="page-header" >
+	<form name="findForm"  ng-submit="doFind()">
+		<md-input-container >
+			<label>Pesquisar</label> 
+			<input type="number" name="txPesquisa" ng-model="txtFind"  required class="form-input"  ng-maxlength="256" maxlength="256" >			
+			<div ng-messages="trackForm.txTitulo.$error" ng-if='trackForm.txTitulo.$dirty'  style="color:red" role="alert">
+				<div ng-message="required"> Campo obrigatório.</div>				        			
+       		</div>
+       		
+		</md-input-container>
+		
+		<md-button  type="submit" ngClick="doFind()" ng-disabled="txtFind == null || txtFind.length <= 0" class="md-primary  md-raised form-input">Pesquisar</md-button>
+		
+	</form>
+	
+	<div layout="row" layout-xs="column">
+		<md-card ng-hide="pedidos == null || pedidos.length <= 0">
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-title">Pedidos</span>									
+				</md-card-title-text>			
+			</md-card-title>
+			<md-card-content>
+				<md-list-item ng-repeat="it in pedidos"  ng-click="goToEdit(it.cdPedido)">
+					<strong>{{it.codigo}}</strong>
+					<em>({{it.cliente.nome}})</em>							
+				</md-list-item>		
+			</md-card-content>
+				
+		</md-card>
+		
+		
+	</div>
+	
+	
+		
+</div>

@@ -1,17 +1,21 @@
 package br.com.rfalessandro.contab.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
-@NamedQueries({@NamedQuery(name="ClienteModel.getAllByNome", query="select c from ClienteModel c where c.nome = ?1 ")})
+@NamedQueries({@NamedQuery(name="ClienteModel.getAllByNome", query="select c from ClienteModel c where c.nome like ?1 ")})
 public class ClienteModel extends BaseModel {
 
 	private static final long serialVersionUID = 7651560349851796130L;
@@ -34,6 +38,9 @@ public class ClienteModel extends BaseModel {
 
 	@Column(length = 320)
 	private String email;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente")
+	private List<PedidoModel> lsPedido;
 
 	public long getCdCliente() {
 		return cdCliente;
@@ -81,6 +88,14 @@ public class ClienteModel extends BaseModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<PedidoModel> getLsPedido() {
+		return lsPedido;
+	}
+
+	public void setLsPedido(List<PedidoModel> lsPedido) {
+		this.lsPedido = lsPedido;
 	}
 
 }

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="page-header" ng-style="{ 'margin':'35px' }">
+	<style type="text/css">
+		
+		
+		 .form-input
+		 {
+		 	display: inline-block;			
+		 	width: 300px;
+		 	height: 25px;
+		 }
+		
+		 .form-input-select
+		 {
+		 	display: inline-block;			
+		 	width: 211px;
+		 }
+		
+		
+}
+		
+	</style>
+	
+   <span class="md-headline">Cadastro de pedido</span>
+   <md-divider ></md-divider>
+  	 <form  name="pedidoForm" class="form-horizontal" role="form" ng-submit="submit_form()" >
+  	
+ 		<div layout="column">
+ 				
+	 		<div layout="row" layout-xs="column">			
+				<md-input-container class="form-input">
+					<label>Número</label> 
+					<input type="number"  name="txNumero" ng-model="pedido.codigo"  required  ng-maxlength="15" maxlength="15" >
+					 
+				</md-input-container>
+	
+				<md-input-container class="form-input">
+					<label>Emissão</label>
+					
+					<md-datepicker name="dtEmissao" ng-model="pedido.dataEmissao" required  ></md-datepicker>
+				
+				</md-input-container>
+			</div>
+				
+
+		
+		<p> </p>
+		
+		
+		
+			<span class="md-headline">Cliente</span>
+			
+		<md-divider ></md-divider>	
+		
+		<div layout="row" layout-xs="column">			
+			<md-input-container class="form-input">
+					<label>{{ pedido.cliente.idTipoPessoa == 0 ? "Nome" : "Razão social"}}</label> 
+					<input type="text" name="txClienteNome" ng-model="pedido.cliente.nome" required class="form-input" ng-maxlength="128" maxlength="128"/>
+					
+	       	</md-input-container>
+	       	<md-input-container class="form-input" layout-margin>
+				<md-switch class="md-primary" layout-align="left center"
+					ng-true-value="0"
+					ng-false-value="1"
+				 	ng-model="pedido.cliente.idTipoPessoa">
+				 	
+				    {{ pedido.cliente.idTipoPessoa == 0 ? "Pessoa fisíca" : "Pessoa jurídica"}}
+				 </md-switch>	
+			 </md-input-container>		
+		</div>
+		<div layout="row" layout-xs="column">			
+			<md-input-container class="form-input">
+					<label>{{ pedido.cliente.idTipoPessoa == 0 ? "CPF" : "CNPJ"}}</label> 
+					<input type="text" name="txClienteCpf" ng-model="pedido.cliente.nrDocumento" required class="form-input" ng-maxlength="128" maxlength="128"
+					mask mask-function="getMaskPessoa()"
+					/>
+	       	</md-input-container>
+	       	
+			
+	       	
+	       	<md-input-container class="form-input">
+					<label>Telefone</label> 
+					<input type="text" name="txClienteTelefone" ng-model="pedido.cliente.telefone" required 
+	 				  mask mask-str="(99) (9)?9999-9999">
+	       	</md-input-container>	
+       	</div>
+       	<md-input-container class="form-input">
+				<label>E-mail</label> 
+				<input type="email" name="txClienteEmail" ng-model="pedido.cliente.email" required class="form-input" ng-maxlength="128" maxlength="128"/>
+				
+       	</md-input-container>		
+		
+	
+		<p> </p>
+		<span class="md-headline">Produto</span>
+		
+		
+		<div ng-messages="pedidoForm.txProdutoNome.$error" >
+			<p style="color: red" ng-message="no.produto">Adicione um produto.</p>
+		</div>
+		
+		<md-chips ng-model="pedido.lsProdutos"  md-removable="true" ng-click="selectPedidoProduto($event)")>
+	        <md-chip-template>
+	          <strong>{{$chip.produto.descricao}} </strong>
+	          <em>({{$chip.produto.valorUnitario * $chip.quantidade | currency:"R$"}})</em>
+	        </md-chip-template>
+      	</md-chips>
+	
+	
+		<div layout="row" layout-xs="column">			
+			<md-input-container class="form-input">
+				<label>Descrição</label> 
+				<input type="text" name="txProdutoDescricao" ng-model="pedidoProduto.produto.descricao" class="form-input" ng-maxlength="256" maxlength="256"
+				ng-change="validaPedidoProdutoDescricao()" 
+				/>
+				
+				<div ng-hide="prodDescrValid" style="color: red" >
+					Campo obrigatório.
+				</div>
+				
+			</md-input-container>
+			
+		
+					
+			<md-input-container class="form-input">
+					<label>Código</label> 
+					<input type="text" name="txProdutoCodigo" ng-model="pedidoProduto.produto.codigo"  class="form-input" ng-maxlength="2048" maxlength="2048"
+					ng-change="validaPedidoProdutoCodigo()"				
+					/>
+					<div ng-hide="prodCodigoValid" style="color: red" >
+						Campo obrigatório.
+					</div>
+			</md-input-container>
+			<div layout-margin>
+				<md-button ng-click="addProduto()" class="md-primary  md-fab md-mini" >+</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-xs="column">
+			<md-input-container class="form-input">
+				<label>Quantidade</label> 
+				<input type="number" name="txProdutoQuantidade" ng-model="pedidoProduto.quantidade"  class="form-input" ng-change="validaPedidoProdutoQuantidade()"/>
+				<div ng-hide="prodQtdeValid" style="color: red" >
+						Campo obrigatório.
+					</div>			
+			</md-input-container>
+	
+			<md-input-container class="form-input">
+				<label>Valor</label> 
+				<input type="number" name="txProduoValorUnitario" ng-model="pedidoProduto.produto.valorUnitario" class="form-input" ng-change="validaPedidoProdutoValor()"/>
+				<div ng-hide="prodValorValid" style="color: red" >
+						Campo obrigatório.
+				</div>			
+			</md-input-container>		
+		</div>
+		 
+		
+		<md-button  type="submit" ngClick="submit_form()" ng-disabled="pedidoForm.$invalid || pedido.lsProdutos.length <= 0" class="md-primary  md-raised form-input">
+		{{cdPedido != null ? "Editar" : "Cadastrar"}}</md-button>
+		
+		
+		<md-divider ></md-divider>	
+		<p> </p>
+		<span class="md-headline">Valor total: {{pedido.valorTotal | currency:"R$"}}</span>
+		</div>
+		
+	</form>
+   
+</div>
+
+</body>
+</html>

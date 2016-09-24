@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,12 +27,12 @@ public class PedidoProdutoModel extends BaseModel {
 	@Column(precision = 10, scale = 2)
 	private BigDecimal quantidade;
 
-	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "cdProduto")
-	private ProdutoModel produto;
-
+	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "cdProduto", nullable=false)
+	private ProdutoModel produto; 
+ 
 	@ManyToOne
-	@JoinColumn(name = "cdPedido")
+	@JoinColumn(name = "cdPedido", nullable=false)
 	private PedidoModel pedido;
 
 	public long getCdPedidoProduto() {
@@ -56,6 +57,14 @@ public class PedidoProdutoModel extends BaseModel {
 
 	public void setPedido(PedidoModel pedido) {
 		this.pedido = pedido;
+	}
+
+	public BigDecimal getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
 	}
 
 }

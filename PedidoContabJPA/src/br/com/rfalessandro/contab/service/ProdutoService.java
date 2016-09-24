@@ -26,8 +26,8 @@ public class ProdutoService {
 	
 	
 	@Transactional(value=TxType.REQUIRED)
-	public  ProdutoModel cadastarProduto(ProdutoModel produto) {
-		return produtoDAO.salvar(produto);
+	public  void cadastarProduto(ProdutoModel produto) throws Exception{
+		produtoDAO.salvar(produto);
 	}
 
 }
